@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <script src="aframe-v1.6.0.min.js"></script>
+  </head>
+  <body>
+  <script>
+//Завдання: написати компонент, що буде рухати об'єкт за іншим об'єктом
+	AFRAME.registerComponent('follow', {
+	//schema вказує, параметри якого типу буде приймати компонент при ініціалізації
+	schema: {
+	//за яким об'єктом слідуємо та з скою швидкістю
+	  target: {type: 'selector'},
+	  speed: {type: 'number'}
+	},
+	//функція init запускається 1 раз при старті виконання
+	init: function () {
+	//створюємо 3-вимірний вектор для подальшого використання
+		this.directionVec3 = new THREE.Vector3();
+	},
+	//функція tick виконується кожен кадр та приймає загальний час існування компонента та час що пройшов з минулого тіку
+	tick: function(t, dt){
+	//куди треба їхати та де ми
+    	let targetPosition = this.data.target.object3D.position;
+    	let currentPosition = this.el.object3D.position;		
+		
+	//дізнаємося різницю
+		this.directionVec3.copy(targetPosition).sub(currentPosition);	
+	//дізнаємося відстань
+		let distance = this.directionVec3.length();
+		let maxMovement = this.data.speed*dt/1000;
+
+	//яку частину дистанції за 1 тік ми можемо пройти
+		let coef = 1
+		if (distance>maxMovement){
+			coef = maxMovement/distance
+		}
+
+	this.el.setAttribute('position', {
+      x: currentPosition.x + this.directionVec3.x*coef,
+      y: currentPosition.y + this.directionVec3.y*coef,
+      z: currentPosition.z + this.directionVec3.z*coef
+    });
+
+	}
+	});
+	
+  </script>
+
+    <a-scene>
+		<a-box 
+			id="box1"
+			position="2 0 -5" 
+			animation="property: position; to: -5 9 -9; dur: 1000; easing: linear; loop: true" 
+			color="tomato">
+		</a-box>
+		<a-box 
+			follow="target:#box1; speed:10"
+			id="box2"
+			position="-2 1.6 -5" 
+			color="yellow">
+		</a-box>
+    </a-scene>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script src="aframe-v1.6.0.min.js"></script>
+  </head>
+  <body>
+  <script>
+//Завдання: написати компонент, що буде рухати об'єкт вгору нескінченно із заданою швидкістю
+	AFRAME.registerComponent('upmover', {
+	//schema вказує, параметри якого типу буде приймати компонент при ініціалізації
+	schema: {
+	 	speed: {type: 'number', default: '1'}
+		//далі цей параметр можна дістати через this.data.speed
+  	},
+	//функція init запускається 1 раз при старті виконання
+	init: function () {
+		this.p = this.el.getAttribute("position")
+	},
+	//функція tick виконується кожен кадр та приймає загальний час існування компонента та час що пройшов з минулого тіку
+	tick: function(t, dt){
+		this.p.y+=this.data.speed*dt/1000
+		this.el.setAttribute("position", this.p)
+	}
+	});
+	
+  </script>
+
+    <a-scene>
+		<a-box 
+			position="-1 1.6 -5" 
+			animation="property: rotation; to: 180 90 -90; dur: 1000; easing: linear; loop: true" 
+			upmover="speed:1"
+			color="tomato">
+		</a-box>
+		<a-box 
+			upmover="speed:2"
+			id="box2"
+			position="-2 1.6 -5" 
+			color="yellow">
+		</a-box>
+    </a-scene>
+  </body>
+</html>

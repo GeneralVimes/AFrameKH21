@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <script src="aframe-v1.6.0.min.js"></script>
+  </head>
+  <body>
+  <script>
+	AFRAME.registerComponent('hello-world', {
+	//schema вказує, параметри якого типу буде приймати компонент при ініціалізації
+	schema: {
+	//назва параметра message, тип string, дефолтне значення Hello, World!
+    	message: {type: 'string', default: 'Hello, World!'}
+		//далі цей параметр можна дістати через this.data.message
+  	},
+	//функція init запускається 1 раз при старті виконання
+	init: function () {
+		// console.log(this.data.message);
+		// console.log(this.el);//this.el дозволяє компоненту дізнатися про те, на кому він висить
+
+	},
+	//функція tick виконується кожен кадр та приймає загальний час існування компонента та час що пройшов з минулого тіку
+	tick: function(t, dt){
+		//тут ми просто виведемо ці 2 числа у консоль
+		console.log(t,dt)
+	}
+	});
+	
+  </script>
+
+    <a-scene>
+		<a-box 
+			position="-1 1.6 -5" 
+			hello-world = "message: WWW"
+			animation="property: position; to: 1 4 -5; dur: 1000; easing: linear; loop: true" 
+			color="tomato">
+		</a-box>
+		<a-box 
+			id="box2"
+			position="-2 1.6 -5" 
+			color="yellow">
+		</a-box>
+    </a-scene>
+  </body>
+</html>

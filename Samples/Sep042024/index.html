@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <script src="aframe-v1.6.0.min.js"></script>
+  </head>
+  <body>
+  <script>
+	AFRAME.registerComponent('hello-world', {
+	//функція init запускається 1 раз при старті виконання
+	init: function () {
+		console.log('Hello, World!');
+		console.log(this.el);//this.el дозволяє компоненту дізнатися про те, на кому він висить
+
+	}
+	});
+
+  /*
+  Щоб програмно вішати компоненти на об'єкти A-Frame, треба зробити наступне
+  Самому об'єкту дамо унікальний id (наприклад, box2)
+	
+	Потім виконаємо функцію
+  document.querySelector('#box2').setAttribute('hello-world', '');
+
+  Ще приклад для зміни координат: document.querySelector('#box2').setAttribute('position', '1 4 -5');
+  так жовтий бокс стане на координати 1, 4, -5 у світі
+
+Якщо ми хочемо кожен раз здвигати об'єкт відносно його попереднього положення
+то треба спочатку дізнатися положення, потім змінити, і потім виставити новий атрибут
+let p = document.querySelector('#box2').getAttribute('position');
+p.x+=1
+document.querySelector('#box2').setAttribute('position', p);
+  */	
+  </script>
+
+    <a-scene>
+		<a-box 
+			position="-1 1.6 -5" 
+			hello-world
+			animation="property: position; to: 1 4 -5; dur: 1000; easing: linear; loop: true" 
+			color="tomato">
+		</a-box>
+		<a-box 
+			id="box2"
+			position="-2 1.6 -5" 
+			color="yellow">
+		</a-box>
+    </a-scene>
+  </body>
+</html>
