@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <script src="aframe-v1.6.0.min.js"></script>
+  </head>
+  <body>
+  <script>
+  //компонент для зміни кольору при наведенні курсору
+  AFRAME.registerComponent('changecolor', {
+    schema: {
+      color: {default: 'red'}
+    },
+
+    init: function () {
+      var newColor = this.data.color;
+      var el = this.el;  // <a-box>
+      var defaultColor = el.getAttribute('material').color;
+
+      el.addEventListener('mouseenter', function () {
+        el.setAttribute('color', newColor);
+      });
+
+      el.addEventListener('mouseleave', function () {
+        el.setAttribute('color', defaultColor);
+      });
+    }
+  });
+
+  //компонент для запуску руху вгору при наведенні курсору
+  AFRAME.registerComponent('launcher', {
+    schema: {      
+    },
+    init: function () {
+      var el = this.el;  // <a-box>
+      el.addEventListener('mouseenter', function () {
+        el.setAttribute('upmover',"");
+      });
+    }
+  });
+
+AFRAME.registerComponent('upmover', {
+	//schema вказує, параметри якого типу буде приймати компонент при ініціалізації
+	schema: {
+	 	speed: {type: 'number', default: '1'}
+		//далі цей параметр можна дістати через this.data.speed
+  	},
+	//функція init запускається 1 раз при старті виконання
+	init: function () {
+		this.p = this.el.getAttribute("position")
+	},
+	//функція tick виконується кожен кадр та приймає загальний час існування компонента та час що пройшов з минулого тіку
+	tick: function(t, dt){
+		this.p.y+=this.data.speed*dt/1000
+		this.el.setAttribute("position", this.p)
+	}
+	});	
+  </script>
+
+    <a-scene>
+		<a-box 
+			id="box1"
+			position="2 0 -5" 
+			color="tomato">
+		</a-box>
+		<a-box 
+			id="box2"
+			launcher
+			position="-2 1.6 -5" 
+			color="yellow">
+		</a-box>
+		<a-box
+			changecolor="color: blue" 		
+			id="box3"
+			position="0 4 -5" 
+			color="blue">
+		</a-box>
+		<a-camera>
+			<a-cursor></a-cursor>
+		</a-camera>
+    </a-scene>
+  </body>
+</html>

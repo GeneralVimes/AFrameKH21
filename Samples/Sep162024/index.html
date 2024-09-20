@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <script src="aframe-v1.6.0.min.js"></script>
+  </head>
+  <body>
+  <script>
+	AFRAME.registerComponent('addcube', {
+		schema: {			
+		}, 
+		init:function(){
+			this.sceneEl = document.querySelector('a-scene');
+			this.lastT = 0;
+		},
+		tick: function(t, dt){
+			if (t-this.lastT>1000){
+				var cube = document.createElement('a-box');
+				cube.setAttribute('position', 
+					10*Math.random().toFixed(1)+" "+10*Math.random().toFixed(1)+" "+10*Math.random().toFixed(1));
+				cube.setAttribute('color', "red");
+				this.sceneEl.appendChild(cube);
+				this.lastT=t;
+			}
+		}
+	})
+
+  </script>
+
+    <a-scene stats addcube>
+
+    </a-scene>
+  </body>
+</html>
