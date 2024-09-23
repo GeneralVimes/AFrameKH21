@@ -1,0 +1,38 @@
+<html>
+  <head>
+<script src="aframe-v1.6.0.min.js"></script>
+<script src="aframe-extras.min.js"></script>
+  </head>
+
+
+
+  <body>
+	<script>
+	//Завдання: по кліку на кубі створити ще 1 куб строго над ним
+		AFRAME.registerComponent("reactonclick", {
+			init:function(){
+				this.el.addEventListener("click", function(e) {
+					console.log("click")
+					//для динамічного створення об'єкту треба:
+					//отримати посилання на сцену
+					var sceneEl = document.querySelector('a-scene')
+					//створити об'єкт
+					var cube = document.createElement('a-box');
+					//виставити йому параметри
+					//у даному прикладі бееремо рандомні координати та червоний колір
+					cube.setAttribute('position', 
+					10*Math.random().toFixed(1)+" "+10*Math.random().toFixed(1)+" "+10*Math.random().toFixed(1));
+						cube.setAttribute('color', "red");
+					//додати на сцену
+					sceneEl.appendChild(cube);
+				});
+			}
+		})
+	</script>
+
+	<a-scene stats>
+		<a-entity cursor="rayOrigin:mouse"></a-entity>
+		<a-box reactonclick color="red" position ="0 0 -5"></a-box>
+	</a-scene>
+  </body>
+</html>
