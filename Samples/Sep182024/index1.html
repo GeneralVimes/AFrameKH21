@@ -3,20 +3,23 @@
 <script src="aframe-v1.6.0.min.js"></script>
 <script src="aframe-extras.min.js"></script>
   </head>
-  <body>
 
-      AFRAME.registerComponent("reactonclick", {
-        init: function() {
-			
-			this.el.addEventListener("click", function(e) {
-				console.log("click")	
-            });
-          }
-      });  
+
+
+  <body>
+	<script>
+		AFRAME.registerComponent("reactonclick", {
+			init:function(){
+				this.el.addEventListener("click", function(e) {
+					console.log("click")	
+				});
+			}
+		})
+	</script>
 
 	<a-scene stats>
 		<a-entity cursor="rayOrigin:mouse"></a-entity>
-		<a-box color="red" position ="0 0 -5"></a-box>
+		<a-box reactonclick color="red" position ="0 0 -5"></a-box>
 	</a-scene>
   </body>
 </html>
