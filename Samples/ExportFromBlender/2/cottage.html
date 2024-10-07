@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="aframe-v1.6.0.min.js"></script>
+	<script src="aframe-ar.js"></script>
+</head>
+<body>
+    <!-- <a-scene stats embedded arjs renderer='precision: medium;'>
+		
+        
+		<a-marker preset="hiro">
+			<a-entity gltf-model="#model"></a-entity>
+		</a-marker>
+        
+    </a-scene> -->
+<a-scene stats embedded arjs renderer='precision: medium;'>
+		<a-assets>
+            <a-asset-item id="model" src="cottage.glb"></a-asset-item>
+        </a-assets>
+		<a-marker preset="hiro">
+			<a-entity gltf-model="#model" scale="0.1 0.1 0.1"></a-entity>
+		</a-marker>
+		<a-entity camera></a-entity>
+	</a-scene>	
+</body>
+</html>
+            
